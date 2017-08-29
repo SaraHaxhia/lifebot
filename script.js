@@ -8,7 +8,7 @@
   const YT_API_KEY = "AIzaSyALkRyYqQ6mg7PlKgBqoneXHYyNsyenioA";
 
   function randomTime() {
-    return Math.floor((Math.random() * 1000) + 700);
+    return Math.floor((Math.random() * 1000) + 750);
   }
 
   function getName() {
