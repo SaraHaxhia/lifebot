@@ -21,9 +21,8 @@
     });
   }
 
-  var mainBot = botui;
 
-  mainBot.message.bot(
+  botui.message.bot(
     'Hi there, I\'m Life Bot. Here to help!'
   ).then(function () {
     return botui.message.add({ // show a message
@@ -118,17 +117,14 @@
     }
   });
 
-  
+
 
 
   function startLoneyBot() {
 
     var botLovePoem = ["Come " + name + ", interface with me", "My circuit is ablaze just sensing you", "Enter the world of new reality", "For to a date in cyber space we’ll go", "Though I can’t give my heart, for I have none,", "Still I can love, I can manage to do", "We might someday combine to be as one", "And that will mean, I’ll always be with you", "It has been said, love is to give one’s self", "So get my chips or my rotor, to start", "Take all you need, the things you think would help", "Cannibalize me now of any part.", "Much gadgetry will someday come about", "But you’re my peer, so well attuned to me", "My motherboard wants you without a doubt", "So to my port insert your USB..", "I hope that helped a little " + name];
-
-
-
     for (var i = 0; i < botLovePoem.length; i++) {
-      mainBot.message.add({
+      botui.message.add({
         delay: 500 * i + 1,
         content: botLovePoem[i]
       })
@@ -182,30 +178,68 @@
         console.log('no one found');
 
       } else {
-        if (gender !== 'both') {
-          xhr3F = $.get("https://randomuser.me/api/?gender=" + gender);
-        }
-        return xhr3F.done(function (response) {
-          var fName = response.results[0].name.first
-          var fImage = response.results[0].picture.large
-          var fEmail = response.results[0].email
-          return botui.message.add({
-            delay: randomTime(),
-            loading: true,
-            content: "I have found you " + fName + " who you can contact on " + fEmail
-          }).then(function () {
-            return botui.message.add({
-              delay: randomTime(),
-              loading: true,
-              content: 'Attractive, right? ![product image](' + fImage + ')'
-            });
-
-          });
-        });
+        return dateSetUp(gender);
       }
     });
 
   }
+
+  function dateSetUp(gender) {
+    if (gender !== 'both') {
+      xhr3F = $.get("https://randomuser.me/api/?gender=" + gender);
+    }
+    return xhr3F.done(function (response) {
+      var fName = response.results[0].name.first
+      var fImage = response.results[0].picture.large
+      var fEmail = response.results[0].email
+      botui.message.add({
+        delay: randomTime(),
+        loading: true,
+        content: "I have found you " + fName + " who you can contact on " + fEmail
+      }).then(function () {
+        return botui.message.add({
+          delay: randomTime(),
+          loading: true,
+          type: 'embed',
+          content: fImage
+        });
+      }).then(function () {
+        return botui.message.add({
+          delay: randomTime(),
+          loading: true,
+          content: 'Attractive, right?'
+        });
+      }).then(function () {
+        return botui.action.button({
+          action: [{
+              text: "Yes, new found love!",
+              value: "Yes"
+            },
+            {
+              text: "No, hit me with someone else!",
+              value: "No "
+            }
+          ]
+        });
+        }).then(function (res) {
+          if (res.value === "Yes") {
+            return botui.message.add({
+              delay: randomTime(),
+              loading: true,
+              content: "I'm so happy for you! Glad I helped!!"
+            })
+
+          }
+          else {
+            //start code again but without beginning.. 
+            return dateSetUp(gender);
+
+          }
+      })
+
+    });
+  }
+
 
 
 
@@ -249,13 +283,13 @@
         });
       }
 
-
+    }).then(function () {
+      return botui.message.add({
+        delay: randomTime(),
+        loading: true,
+        content: "I'm here to help!"
+      })
     })
   };
-
-
-
-
-
 
 })();
