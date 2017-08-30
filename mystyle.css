@@ -1,5 +1,37 @@
-body, .botui-container {
-    background-color: #D5FFC0;
+#my-botui-app {
+    background-image: url("phone.jpg");
+    background-repeat: no-repeat;
+    background-position: top center; 
+    height: 960px;
+    width: 592px;
+    margin: 0 auto;
+    padding-top: 60px;
+    position: relative;
+    background-size: 592px ;
+}
+
+.botui-container {
+   
+    margin: 50px auto;
+    width: 400px;
+    height: 720px; 
+  
+    
+}
+
+@media screen and (max-width: 500px) {
+    #my-botui-app {
+        background: black;
+        padding-top: 0px;
+        width: 100%;
+    }
+    .botui-container {
+         margin: 0;
+         width: 100%;
+         height: 100%; 
+
+     }
+     
 }
 
 .botui-message-content.text {
@@ -9,15 +41,17 @@ body, .botui-container {
 
 .botui-message-content {
     background: #439487;
+    
 }
 
 .botui-container {
     max-width: 600px; 
-    margin: auto;
+
 }
 
 .human.botui-message-content {
     background-color: #1BA4C7;
+    
 }
 
 

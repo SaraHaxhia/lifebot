@@ -23,7 +23,7 @@
   }
 
   function scrollDown() {
-    $("html, body").animate({ scrollTop: $(document).height()-$(window).height() });
+    $(".botui-container").animate({ scrollTop: $(document).height()-$(window).height() });
   }
 
 
@@ -55,7 +55,10 @@
     });
   }).then(function () {
     //how to make it scroll automatically BEFORE button is clicked???
-    scrollDown();
+    setTimeout( () => {
+      scrollDown();
+    }, 100);
+
     return botui.action.button({
       action: [{
           text: 'I\'m really happy',
@@ -87,7 +90,8 @@
         }
       ]
     });
-  }).then(function (res) { // get the result
+  }).then(function (res) { 
+    scrollDown(); //buttons still dont scroll down??
     var botmessage;
     var good = "Yay, that\'s so great to hear! I\'ll keep that in mind for you. I imagine you\'re feeling something like this..";
     var bad = `Oh you poor thing! I\'ll keep that in mind for you. I imagine you\'re feeling something like this..`;
@@ -139,18 +143,19 @@
       botui.message.add({
         delay: 500 * i + 1,
         content: botLovePoem[i]
-        scrollDown();
-      })
+      }) //scroll doesnt work here either! 
     }
-
+    setTimeout( () => {
+      scrollDown();
+    }, 500);
 
   }
 
 
   function startHeartBrokenBot() {
-
+    scrollDown();
     return botui.message.add({
-      scrollDown();
+      
       delay: randomTime(),
       loading: true,
       content: "I have an idea. Type the gender you are interested in below.."
@@ -207,8 +212,9 @@
       var fName = response.results[0].name.first
       var fImage = response.results[0].picture.large
       var fEmail = response.results[0].email
+      scrollDown();
       botui.message.add({
-        scrollDown();
+        
         delay: randomTime(),
         loading: true,
         content: "I have found you " + fName + " who you can contact on " + fEmail
@@ -257,7 +263,7 @@
             return dateSetUp(gender);
 
           }
-          scrollDown();
+          
       
       })
 
@@ -272,12 +278,14 @@
 
 
   function generalBot(botmessage) {
+    scrollDown();
 
     return botui.message.add({
       delay: randomTime(),
       loading: true,
       content: botmessage
     }).then(function (res) {
+      scrollDown();
       var randomPicOffset = Math.floor(Math.random() * 10);
 
       var xhr = $.get("https://api.giphy.com/v1/gifs/search?q=" + mood + "&api_key=" + GILFY_API_KEY + "&limit=1" + "&offset=" + randomPicOffset);
@@ -287,12 +295,20 @@
         return xhr.done(function (response) {
           var gifUrl = response.data[0].embed_url;
           console.log(gifUrl);
+          
           return botui.message.add({
             delay: randomTime(),
             loading: true,
             type: 'embed',
             content: gifUrl
-          });
+          }).then(function () {
+            return botui.message.add({
+              delay: randomTime(),
+              loading: true,
+              content: "I'm here to help!"
+            })
+          })
+          scrollDown();
         });
       } else {
         return xhr2.done(function (response) {
@@ -302,17 +318,25 @@
             loading: true,
             type: 'embed',
             content: "https://www.youtube.com/embed/" + ytUrl + "?autoplay=1"
-          });
-
+          }).then(function () {
+            return botui.message.add({
+              delay: randomTime(),
+              loading: true,
+              content: "I'm here to help!"
+            })
+  
+          })
+          scrollDown();
         });
       }
 
-    }).then(function () {
-      return botui.message.add({
-        delay: randomTime(),
-        loading: true,
-        content: "I'm here to help!"
-      })
+    // }).then(function () {
+    //   return botui.message.add({
+    //     delay: randomTime(),
+    //     loading: true,
+    //     content: "I'm here to help!"
+    //   })
+    //   scrollDown();
     })
   };
 
