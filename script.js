@@ -29,6 +29,8 @@
 
 
 
+
+
   botui.message.bot(
     'Hi there, I\'m Life Bot. Here to help!'
   ).then(function () {
@@ -193,31 +195,31 @@
           break;
         }
       }
-
-      if (gender === 'none') {
-        console.log('no one found');
-
-      } else {
-        return dateSetUp(gender);
-      }
+      return dateSetUp(gender);
     });
 
   }
 
   function dateSetUp(gender) {
-    if (gender !== 'both') {
+    if (gender === 'female' || gender === 'male') {
       xhr3F = $.get("https://randomuser.me/api/?gender=" + gender);
+    } else {
+      xhr3F = $.get("https://randomuser.me/api/");
     }
     return xhr3F.done(function (response) {
       var fName = response.results[0].name.first
+      fName = fName.charAt(0).toUpperCase() + fName.slice(1);
       var fImage = response.results[0].picture.large
       var fEmail = response.results[0].email
+      var genderMessage = "I have found you " + fName + " who you can contact on " + fEmail;
+      if (gender === 'none') {
+        genderMessage = "I'm not quite sure what you mean.. but what do you think about " + fName + " who you can contact on " + fEmail;
+      }
       scrollDown();
-      botui.message.add({
-        
+      botui.message.add({      
         delay: randomTime(),
         loading: true,
-        content: "I have found you " + fName + " who you can contact on " + fEmail
+        content: genderMessage
       }).then(function () {
         scrollDown();
         return botui.message.add({
@@ -269,11 +271,6 @@
 
     });
   }
-
-
-
-
-
 
 
 
