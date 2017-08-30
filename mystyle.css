@@ -1,0 +1,25 @@
+body, .botui-container {
+    background-color: #D5FFC0;
+}
+
+.botui-message-content.text {
+    color: #FEFFF5;
+    
+}
+
+.botui-message-content {
+    background: #439487;
+}
+
+.botui-container {
+    max-width: 600px; 
+    margin: auto;
+}
+
+button.botui-actions-buttons-button {
+    margin: 5px;
+}
+
+.botui-message-content {
+
+}
