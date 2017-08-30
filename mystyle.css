@@ -3,7 +3,7 @@ body, .botui-container {
 }
 
 .botui-message-content.text {
-    color: #FEFFF5;
+    color: #EAF2E7;
     
 }
 
@@ -16,10 +16,15 @@ body, .botui-container {
     margin: auto;
 }
 
+.human.botui-message-content {
+    background-color: #1BA4C7;
+}
+
+
 button.botui-actions-buttons-button {
     margin: 5px;
+    background-color: #1BA4C7;
+    color: #EAF2E7;
+  
 }
 
-.botui-message-content {
-
-}

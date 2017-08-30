@@ -7,6 +7,7 @@
   const GILFY_API_URL = "https://api.giphy.com/v1/gifs/search";
   const YT_API_KEY = "AIzaSyALkRyYqQ6mg7PlKgBqoneXHYyNsyenioA";
 
+ 
   function randomTime() {
     return Math.floor((Math.random() * 1000) + 750);
   }
@@ -21,10 +22,17 @@
     });
   }
 
+  function scrollDown() {
+    $("html, body").animate({ scrollTop: $(document).height()-$(window).height() });
+  }
+
+
+
 
   botui.message.bot(
     'Hi there, I\'m Life Bot. Here to help!'
   ).then(function () {
+    scrollDown();
     return botui.message.add({ // show a message
       delay: randomTime(),
       loading: true,
@@ -32,18 +40,22 @@
     });
   }).then(getName).then(function (res) { // get the result
     name = res.value;
+    scrollDown();
     return botui.message.add({
       delay: randomTime(),
       loading: true,
       content: 'It\'s really nice to meet you ' + res.value
     });
   }).then(function () {
+    scrollDown();
     return botui.message.add({
       delay: randomTime(),
       loading: true,
       content: `How are you feeling today?`
     });
   }).then(function () {
+    //how to make it scroll automatically BEFORE button is clicked???
+    scrollDown();
     return botui.action.button({
       action: [{
           text: 'I\'m really happy',
@@ -127,6 +139,7 @@
       botui.message.add({
         delay: 500 * i + 1,
         content: botLovePoem[i]
+        scrollDown();
       })
     }
 
@@ -137,10 +150,12 @@
   function startHeartBrokenBot() {
 
     return botui.message.add({
+      scrollDown();
       delay: randomTime(),
       loading: true,
       content: "I have an idea. Type the gender you are interested in below.."
     }).then(function () {
+      scrollDown();
       return botui.action.text({ // show 'text' action
         delay: 600,
         loading: true,
@@ -193,10 +208,12 @@
       var fImage = response.results[0].picture.large
       var fEmail = response.results[0].email
       botui.message.add({
+        scrollDown();
         delay: randomTime(),
         loading: true,
         content: "I have found you " + fName + " who you can contact on " + fEmail
       }).then(function () {
+        scrollDown();
         return botui.message.add({
           delay: randomTime(),
           loading: true,
@@ -204,12 +221,14 @@
           content: fImage
         });
       }).then(function () {
+        scrollDown();
         return botui.message.add({
           delay: randomTime(),
           loading: true,
           content: 'Attractive, right?'
         });
       }).then(function () {
+        scrollDown();
         return botui.action.button({
           action: [{
               text: "Yes, new found love!",
@@ -221,7 +240,10 @@
             }
           ]
         });
+        // }).then(function() {
+        //   return scrollDown();
         }).then(function (res) {
+          scrollDown();
           if (res.value === "Yes") {
             return botui.message.add({
               delay: randomTime(),
@@ -235,6 +257,8 @@
             return dateSetUp(gender);
 
           }
+          scrollDown();
+      
       })
 
     });
