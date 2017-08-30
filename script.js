@@ -256,7 +256,7 @@
     }).then(function (res) {
       var randomPicOffset = Math.floor(Math.random() * 10);
 
-      var xhr = $.get("http://api.giphy.com/v1/gifs/search?q=" + mood + "&api_key=" + GILFY_API_KEY + "&limit=1" + "&offset=" + randomPicOffset);
+      var xhr = $.get("https://api.giphy.com/v1/gifs/search?q=" + mood + "&api_key=" + GILFY_API_KEY + "&limit=1" + "&offset=" + randomPicOffset);
       var xhr2 = $.get("https://www.googleapis.com/youtube/v3/search?q=" + mood + "&maxResults=1" + "&part=snippet" + "&key=" + YT_API_KEY);
 
       if (randomTime() % 2 === 0) {
@@ -291,5 +291,7 @@
       })
     })
   };
+
+
 
 })();
